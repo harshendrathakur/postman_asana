@@ -1,0 +1,474 @@
+{
+  "info": {
+    "_postman_id": "f261afb0-eefc-47c3-8413-1e16bf528bee",
+    "name": "Asana",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "_postman_id": "6fb7861f-6d45-4639-8b14-77e3596b63dd",
+      "name": "Users",
+      "description": "This folder contains requests to fetch, update, create or delete users from Asana.",
+      "item": [
+        {
+          "_postman_id": "29a207e4-11a3-4097-8266-94e055bf6bc8",
+          "name": "getUsers",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "6afdaf50-6d64-4ac2-b034-addf65ab2967",
+                "type": "text/javascript",
+                "exec": [
+                  "let rpt = pm.environment.get(\"respTime\");",
+                  "var x =  Number(rpt);",
+                  "",
+                  "pm.test(\"Response time is less than \" +rpt+\". Actual response time is \"+ pm.response.responseTime, function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(x);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "url": "{{url}}users"
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "a714a5c3-f8e2-44cb-9b26-394f734e200a",
+          "name": "createUser",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": "https://app.asana.com/api/1.0/users/"
+          },
+          "response": []
+        },
+        {
+          "_postman_id": "4f15346e-6831-4c45-9ead-28606652d68b",
+          "name": "UpdateUser",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Harshendra Thakur",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": "{{url}}users/{{user-id}}"
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": {
+          "token": "0/261aa7df540cdb8395f017ec6dc8c895"
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "cc969d9f-66d2-4a73-9baa-27a858431f28",
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "id": "b4d07b1a-be89-42ff-bcf7-4c448b01ae74",
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "_postman_id": "c2d5fca8-aac9-4e25-8c8d-4289e13dc110",
+      "name": "Workspace",
+      "description": "This folder contains requests to test create, update, fetch and delete functionalities",
+      "item": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "d768ed62-ca4b-4b6c-acf1-ab0ca6eaacda",
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "_postman_id": "e5105610-2cd4-4320-bd0d-9ab5a44e998d",
+      "name": "Tasks",
+      "description": "This folder contains api requests to fetch, create, update and delete user tasks.",
+      "item": [
+        {
+          "_postman_id": "41a66eba-81d0-4b2f-89ec-2ae1ba9004e6",
+          "name": "User's tasks",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "token": "0/261aa7df540cdb8395f017ec6dc8c895"
+              }
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "0/261aa7df540cdb8395f017ec6dc8c895"
+              }
+            ],
+            "body": {},
+            "url": {
+              "raw": "{{url}}workspaces/{{workstation-id}}/tasks?assignee={{user-id}}",
+              "host": [
+                "{{url}}workspaces"
+              ],
+              "path": [
+                "{{workstation-id}}",
+                "tasks"
+              ],
+              "query": [
+                {
+                  "key": "assignee",
+                  "value": "{{user-id}}",
+                  "equals": true
+                }
+              ]
+            },
+            "description": "API request to fetch the tasks assigned to a user"
+          },
+          "response": []
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "5f6577e2-eaa6-4750-aa66-0bec2dfdfe43",
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function() {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "_postman_id": "addef8b5-a86b-41dd-8a57-bc91f5048aa9",
+      "name": "Conversation",
+      "description": "",
+      "item": [
+        {
+          "_postman_id": "a0e4bbc8-3953-4710-aa5a-0de3dc65b839",
+          "name": "Team conversation - Add Post",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "token": "0/261aa7df540cdb8395f017ec6dc8c895"
+              }
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": "{{url}}conversations"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "_postman_id": "d80c4dbc-a3bd-4c25-be34-b24d98c94a04",
+      "name": "GetWorkspace",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "a79f7a46-9da6-4302-9c44-bb80632e4b33",
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer 0/261aa7df540cdb8395f017ec6dc8c895"
+          }
+        ],
+        "body": {},
+        "url": {
+          "raw": "https://app.asana.com/api/1.0/workspaces/:ws",
+          "protocol": "https",
+          "host": [
+            "app",
+            "asana",
+            "com"
+          ],
+          "path": [
+            "api",
+            "1.0",
+            "workspaces",
+            ":ws"
+          ],
+          "variable": [
+            {
+              "key": "ws",
+              "value": "714667443793951"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "_postman_id": "b1866127-d7ae-4935-a807-1776eeca2a5a",
+      "name": "Create task",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": {
+            "token": "0/261aa7df540cdb8395f017ec6dc8c895"
+          }
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer 0/261aa7df540cdb8395f017ec6dc8c895",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "name",
+              "value": "Test first task7",
+              "type": "text"
+            },
+            {
+              "key": "assignee",
+              "value": "714666597693845",
+              "type": "text"
+            },
+            {
+              "key": "",
+              "value": "",
+              "type": "text"
+            }
+          ]
+        },
+        "url": "https://app.asana.com/api/1.0/workspaces/714667443793951/tasks"
+      },
+      "response": []
+    },
+    {
+      "_postman_id": "f0ced0a1-83b1-4236-b855-cc05364e61f0",
+      "name": "Update task",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer 0/261aa7df540cdb8395f017ec6dc8c895"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/x-www-form-urlencoded"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "due_on",
+              "value": "2018-06-22T07:05:00.003Z",
+              "type": "text"
+            },
+            {
+              "key": "id",
+              "value": "715290462289096",
+              "type": "text",
+              "disabled": true
+            },
+            {
+              "key": "liked",
+              "value": "true",
+              "type": "text"
+            },
+            {
+              "key": "notes",
+              "value": "this is done via POST request",
+              "type": "text"
+            }
+          ]
+        },
+        "url": "https://app.asana.com/api/1.0/tasks/718572688245524"
+      },
+      "response": []
+    },
+    {
+      "_postman_id": "fb0a8550-4523-4f74-a922-ed6787abc134",
+      "name": "https://app.asana.com/api/1.0/users/",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "56d8df3d-5557-4e59-9682-393bc95c9d90",
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": {
+            "token": "0/261aa7df540cdb8395f017ec6dc8c895"
+          }
+        },
+        "method": "GET",
+        "header": [],
+        "body": {},
+        "url": "https://app.asana.com/api/1.0/users/"
+      },
+      "response": []
+    },
+    {
+      "_postman_id": "3f1dc770-07ff-450e-82d1-09edfa29cfbd",
+      "name": "https://app.asana.com/api/1.0/workspaces/",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": {
+            "token": "0/261aa7df540cdb8395f017ec6dc8c895"
+          }
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "0/261aa7df540cdb8395f017ec6dc8c895"
+          }
+        ],
+        "body": {},
+        "url": "https://app.asana.com/api/1.0/workspaces/"
+      },
+      "response": []
+    },
+    {
+      "_postman_id": "c10cae99-cfbd-4cc7-b473-4aeac51f944c",
+      "name": "https://app.asana.com/api/1.0/workspaces/714667449160501/",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": {
+            "token": "0/261aa7df540cdb8395f017ec6dc8c895"
+          }
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "name",
+              "value": "emailDomain",
+              "type": "text"
+            },
+            {
+              "key": "id",
+              "value": "1927",
+              "type": "text"
+            }
+          ]
+        },
+        "url": "https://app.asana.com/api/1.0/workspaces/714667449160501/"
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": {
+      "token": "0/261aa7df540cdb8395f017ec6dc8c895"
+    }
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "54420e5a-76d2-4f15-9ff2-3856b2e503cf",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "33b5d485-685e-4234-ae99-ed341c0fd2df",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
